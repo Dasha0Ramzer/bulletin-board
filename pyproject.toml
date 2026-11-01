@@ -1,15 +1,31 @@
 [project]
-name = "diplom"
+name = "bulletin-board"
 version = "0.1.0"
-description = ""
+description = """Backend для доски объявлений:
+регистрация/авторизация по JWT,
+разграничение прав (администратор/пользователь),
+восстановление пароля,
+объявления, отзывы и поиск по названию."""
 authors = [
-    {name = "Your Name",email = "you@example.com"}
+    {name = "Даша Рамзер",email = "kda2000.123@yandex.ru"}
 ]
 requires-python = ">=3.14"
 dependencies = [
+    "django (>=6.1.2,<7.0.0)",
+    "python-dotenv (>=1.2.4,<2.0.0)",
+    "djangorestframework (>=3.18.3,<4.0.0)",
+    "django-cors-headers (>=4.9.0,<5.0.0)",
+    "drf-yasg (>=1.21.18,<2.0.0)",
+    "psycopg2-binary (>=2.9.13,<3.0.0)",
+    "pillow (>=13.0.0,<14.0.0)",
+    "djangorestframework-simplejwt (>=5.5.1,<6.0.0)"
 ]
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+package-mode = false
