@@ -1,8 +1,10 @@
 from django.core.management import BaseCommand
+
 from users.models import User
 
+
 class Command(BaseCommand):
-    help = 'Создание суперпользователя'
+    help = "Создание суперпользователя"
 
     def handle(self, *args, **options):
         user = User.objects.create(
@@ -17,4 +19,4 @@ class Command(BaseCommand):
         )
         user.set_password("0000")
         user.save()
-        self.stdout.write(self.style.SUCCESS('Суперпользователь успешно создан!'))
+        self.stdout.write(self.style.SUCCESS("Суперпользователь успешно создан!"))

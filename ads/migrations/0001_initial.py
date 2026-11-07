@@ -15,34 +15,58 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Ad',
+            name="Ad",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200, verbose_name='Название товара')),
-                ('price', models.PositiveIntegerField(verbose_name='Цена товара')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Описание товара')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ads', to=settings.AUTH_USER_MODEL, verbose_name='Автор')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=200, verbose_name="Название товара")),
+                ("price", models.PositiveIntegerField(verbose_name="Цена товара")),
+                ("description", models.TextField(blank=True, null=True, verbose_name="Описание товара")),
+                ("created_at", models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="ads",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Автор",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Объявление',
-                'verbose_name_plural': 'Объявления',
-                'ordering': ['-created_at'],
+                "verbose_name": "Объявление",
+                "verbose_name_plural": "Объявления",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField(verbose_name='Текст отзыва')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
-                ('ad', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to='ads.ad', verbose_name='Объявление')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to=settings.AUTH_USER_MODEL, verbose_name='Автор отзыва')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("text", models.TextField(verbose_name="Текст отзыва")),
+                ("created_at", models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")),
+                (
+                    "ad",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reviews",
+                        to="ads.ad",
+                        verbose_name="Объявление",
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reviews",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Автор отзыва",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Отзыв',
-                'verbose_name_plural': 'Отзывы',
-                'ordering': ['-created_at'],
+                "verbose_name": "Отзыв",
+                "verbose_name_plural": "Отзывы",
+                "ordering": ["-created_at"],
             },
         ),
     ]
