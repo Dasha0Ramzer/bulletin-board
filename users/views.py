@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.models import User
+from users.permissions import IsAdmin
 from users.serializers import (PasswordResetConfirmSerializer, PasswordResetSerializer, UserRegisterSerializer,
                                UserSerializer)
 
@@ -44,7 +45,7 @@ class UserListView(generics.ListAPIView):
 class UserDeleteView(generics.DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdmin]
 
 
 class PasswordResetView(APIView):
@@ -64,7 +65,7 @@ class PasswordResetView(APIView):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
-        reset_link = f"http://localhost:8000/users/reset_password_confirm/{uid}/{token}/"
+        reset_link = f"http://localhost:8000/users/reset_password_confirm/?uid={uid}&token={token}"
 
         send_mail(
             subject="Восстановление пароля",
@@ -80,6 +81,13 @@ class PasswordResetView(APIView):
 class PasswordResetConfirmView(APIView):
     permission_classes = [AllowAny]
     serializer_class = PasswordResetConfirmSerializer
+
+    def get(self, request):
+        uid = request.query_params.get("uid")
+        token = request.query_params.get("token")
+        if uid and token:
+            return Response({"detail": "Параметры получены. Отправьте POST-запрос с новым паролем."})
+        return Response({"error": "Не переданы uid и token"}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
